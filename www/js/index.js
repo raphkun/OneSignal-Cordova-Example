@@ -70,7 +70,7 @@ var app = {
         iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
                
         window.plugins.OneSignal
-          .startInit("3beb3078-e0f1-4629-af17-fde833b9f716")
+          .startInit("YOUR_ONESIGNAL_APP_ID")
           .handleNotificationReceived(function(jsonData) {
             alert("Notification received: \n" + JSON.stringify(jsonData));
             console.log('Did I receive a notification: ' + JSON.stringify(jsonData));
@@ -103,17 +103,6 @@ var app = {
     }
 };
 
-function triggerOutcome() {
-    window.plugins.OneSignal.sendOutcomeWithValue("cordova", 10, function () {
-        console.log("outcomes sent log");
-    });
-}
-
-function triggerIAM() {
-    console.log("Triggering any active IAM with Trigger value birthday is true");
-    window.plugins.OneSignal.addTrigger("birthday", "true");
-}
-
 function getIds() {
     window.plugins.OneSignal.getPermissionSubscriptionState(function(status) {
         document.getElementById("OneSignalUserId").innerHTML = "UserId: " + status.subscriptionStatus.userId;
@@ -123,109 +112,4 @@ function getIds() {
     });
 }
 
-function sendTags() {
-    window.plugins.OneSignal.sendTags({PhoneGapKey: "PhoneGapValue", key2: "value2"});
-    alert("Tags Sent");
-}
-
-function getTags() {
-    window.plugins.OneSignal.getTags(function(tags) {
-        alert('Tags Received: ' + JSON.stringify(tags));
-    });
-}
-
-function deleteTags() {
-    window.plugins.OneSignal.deleteTags(["PhoneGapKey", "key2"]);
-    alert("Tags deleted");
-}
-
-function promptLocation() {
-    window.plugins.OneSignal.promptLocation();
-    // iOS - add CoreLocation.framework and add to plist: NSLocationUsageDescription and NSLocationWhenInUseUsageDescription
-    // android - add one of the following Android Permissions:
-    // <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    // <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-}
-
-function postNotification() {
-    window.plugins.OneSignal.getIds(function(ids) {
-        var notificationObj = { contents: {en: "message body"},
-        data: {"foo": "bar"},
-                          include_player_ids: [ids.userId]};
-        window.plugins.OneSignal.postNotification(notificationObj,
-            function(successResponse) {
-                console.log("Notification Post Success:", successResponse);
-            },
-            function (failedResponse) {
-                console.log("Notification Post Failed: ", failedResponse);
-                alert("Notification Post Failed:\n" + JSON.stringify(failedResponse, null, 2));
-            }
-        );
-    });
-}
-
-function setEmail() {
-    console.log("Setting email: " + document.getElementById("email").value);
-    window.plugins.OneSignal.setEmail(document.getElementById("email").value, function() {
-        console.log("Successfully set email");
-    }, function(error) {
-        alert("Encountered an error setting email: \n" + JSON.stringify(error, null, 2));
-    });
-}
-
-function logoutEmail() {
-    console.log("Logging out of email");
-    window.plugins.OneSignal.logoutEmail(function(successResponse) {
-        console.log("Successfully logged out of email");
-    }, function(error) {
-        alert("Failed to log out of email with error: \n" + JSON.stringify(error, null, 2));
-    });
-}
-
-function setExternalId() {
-   let externalId = document.getElementById("externalId").value;
-   console.log("Setting external ID to " + externalId);
-
-   window.plugins.OneSignal.setExternalUserId(externalId);
-}
-
-function removeExternalId() {
-   console.log("Removing external ID");
-
-   window.plugins.OneSignal.removeExternalUserId();
-}
-
 app.initialize();
-
-
-
-
-// // Add to index.js or the first page that loads with your app.
-// // For Intel XDK and please add this to your app.js.
-
-// document.addEventListener('deviceready', function () {
-//   // Enable to debug issues.
-//   // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
-  
-//   var notificationOpenedCallback = function(jsonData) {
-//     console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-//   };
-
-//   window.plugins.OneSignal
-//           .startInit("d368162e-7c4e-48b0-bc7c-b82ba80d4981")
-//           .handleNotificationReceived(function(jsonData) {
-//             alert("Notification received: \n" + JSON.stringify(jsonData));
-//             console.log('Did I receive a notification: ' + JSON.stringify(jsonData));
-//           })
-//           .handleNotificationOpened(function(jsonData) {
-//             alert("Notification opened: \n" + JSON.stringify(jsonData));
-//             console.log('didOpenRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
-//           })
-//           .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.InAppAlert)
-//           .iOSSettings(iosSettings)
-//           .endInit();
-  
-//   // Call syncHashedEmail anywhere in your app if you have the user's email.
-//   // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
-//   // window.plugins.OneSignal.syncHashedEmail(userEmail);
-// }, false);
