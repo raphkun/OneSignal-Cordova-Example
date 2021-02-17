@@ -112,4 +112,16 @@ function getIds() {
     });
 }
 
+function hello() {
+    navigator.gyroscope.getCurrent(function (orientation) {
+        var element = document.getElementById('orientation');
+        element.innerHTML += JSON.stringify(orientation) + '<br /><hr />';
+    });
+}
+
+function clearLogs() {
+    var element = document.getElementById('orientation');
+    element.innerHTML = '';
+}
+
 app.initialize();

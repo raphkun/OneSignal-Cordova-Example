@@ -39,10 +39,15 @@
         <form>
             <input type="button" value="Get Ids" onclick="getIds()" />
             <br>
+            <input type="button" value="hello" onclick="hello()"/>
+            <input type="button" value="clearlogs" onclick="clearLogs()"/>
+            <br>
         </form>
         
         <p id="OneSignalUserId"></p>
         <p style="word-break: break-all;" id="OneSignalPushToken"></p>
+        <div id="orientation">
+        </div>
         <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
             <p class="event received">Device is Ready</p>

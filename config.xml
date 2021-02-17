@@ -29,5 +29,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <plugin name="cordova-plugin-gyroscope" spec="0.1.4" />
     <plugin name="onesignal-cordova-plugin" spec="2.11.1" />
 </widget>
