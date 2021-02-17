@@ -116,12 +116,14 @@ function hello() {
     navigator.gyroscope.getCurrent(function (orientation) {
         var element = document.getElementById('orientation');
         element.innerHTML += JSON.stringify(orientation) + '<br /><hr />';
-    });
+        localStorage.setItem('lastHello', new Date().toISOString());
+    }, function (err) { console.log('hello', err);});
 }
 
 function clearLogs() {
     var element = document.getElementById('orientation');
     element.innerHTML = '';
+    localStorage.clear();
 }
 
 app.initialize();
